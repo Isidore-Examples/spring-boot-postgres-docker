@@ -12,10 +12,14 @@ WORKDIR /app
 # - The copied file is renamed to 'app.jar' inside the container.
 COPY target/*.jar app.jar
 
-# Inform Docker that the container will listen on port 8080.
-# - This doesn't expose the port on the host; it's just metadata for users and tools.
-EXPOSE 8080
+# Expose ports for external access:
+# - 8080: Standard port for running the Spring Boot application.
+# - 5005: Used for attaching a remote debugger (e.g., from an IDE).
+# Note: 'EXPOSE' only documents the ports. You still need to map them when running the container (e.g., with '-p 8080:8080 -p 5005:5005').
+EXPOSE 8080 5005
 
-# Define the default command to run when the container starts.
-# - It runs the Java application using the JAR file we copied earlier.
+# Specify the default command to run when the container starts.
+# - Runs the Java application using the copied 'app.jar'.
+# - Note: This command does NOT enable debugging by default. 
+#         To use port 5005 for debugging, pass the JVM debug options at runtime.
 CMD ["java", "-jar", "app.jar"]

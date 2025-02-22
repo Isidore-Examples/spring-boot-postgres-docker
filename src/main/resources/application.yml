@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    initialization-mode: always
+    url: jdbc:postgresql://postgres-hello-world:5432/postgres
+    username: postgres
+    password: postgres
+  sql:
+    inti:
+      mode: always
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    defer-datasource-initialization: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+        show_sql: true
